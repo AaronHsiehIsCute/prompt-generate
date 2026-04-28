@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/main.tsx","./src/components/DiffViewer.tsx","./src/components/JsonPreview.tsx","./src/components/OptionTree.tsx","./src/components/PromptPreview.tsx","./src/data/promptOptions.ts","./src/types/prompt.ts","./src/utils/buildDiff.ts","./src/utils/buildImageSpec.ts","./src/utils/buildPrompt.ts"],"version":"5.9.3"}
