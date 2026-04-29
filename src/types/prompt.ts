@@ -1,16 +1,21 @@
-export interface PromptOption {
+export interface PromptSubOption {
   id: string;
   label: string;
   tokens: string[];
-  autoSelects?: string[];
+}
+
+export interface PromptOptionGroup {
+  id: string;
+  label: string;
+  description?: string;
+  subOptions: PromptSubOption[];
 }
 
 export interface PromptCategory {
   id: string;
   label: string;
-  description?: string;
   multi: boolean;
-  options: PromptOption[];
+  groups: PromptOptionGroup[];
 }
 
 export interface PromptBuildResult {
