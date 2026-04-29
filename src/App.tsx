@@ -4,7 +4,7 @@ import PromptPreview from './components/PromptPreview';
 import { PROMPT_CATEGORIES } from './data/promptOptions';
 import { buildPromptFromSelections } from './utils/buildPrompt';
 
-const byCategory = new Map(PROMPT_CATEGORIES.map((c) => [c.id, c.groups.flatMap((g) => g.subOptions.map((o) => o.id))] as const));
+const byCategory = new Map(PROMPT_CATEGORIES.map((c) => [c.id, c.groups.flatMap((g) => g.subOptions.flatMap((s) => [s.id, ...(s.leaves?.map((l) => l.id) ?? [])]))] as const));
 
 export default function App() {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);

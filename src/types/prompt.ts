@@ -1,13 +1,19 @@
-export interface PromptSubOption {
+export interface PromptLeafOption {
   id: string;
   label: string;
   tokens: string[];
 }
 
+export interface PromptSubOption {
+  id: string;
+  label: string;
+  tokens?: string[];
+  leaves?: PromptLeafOption[];
+}
+
 export interface PromptOptionGroup {
   id: string;
   label: string;
-  description?: string;
   subOptions: PromptSubOption[];
 }
 
