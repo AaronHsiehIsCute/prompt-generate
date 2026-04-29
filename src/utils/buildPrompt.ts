@@ -1,61 +1,49 @@
-import type { ImageSpec } from '../types/prompt';
+import { PROMPT_CATEGORIES } from '../data/promptOptions';
+import type { PromptBuildResult, PromptOption } from '../types/prompt';
 
-const labelMap = {
-  actions: {
-    holding_hands: '兩人十指緊扣',
-    smiling: '兩人自然開心微笑',
-    facing_camera: '兩人面向鏡頭',
-  },
-  scene: {
-    outdoor: '戶外場景',
-    tree_shadow: '戶外樹蔭下',
-    dappled_light: '地面與背景有樹影斑駁、光影流動感',
-  },
-  lighting: {
-    afternoon: '下午接近夕陽時段',
-    orange_sunset: '橘紅色暖色調',
-    backlit: '背光，人物邊緣有輪廓光',
-    face_clear: '臉部仍需清楚可辨識',
-  },
-  style: {
-    realistic_photo: '寫實攝影',
-    couple_travel_photo: '自然情侶旅拍風格',
-    cinematic: '電影感',
-  },
-  negative: {
-    do_not_change_face: '不改變原人物五官',
-    no_extra_people: '不新增第三人',
-    not_illustration: '不變成插畫、動漫或過度修圖風格',
-    keep_body_ratio: '不改變身材比例',
-  },
-} as const;
+const optionMap = new Map<string, PromptOption>(PROMPT_CATEGORIES.flatMap((c) => c.options.map((o) => [o.id, o] as const)));
 
-const bullet = (lines: string[]) => lines.map((line) => `- ${line}`).join('\n');
+const resolveIds = (selectedIds: string[]) => {
+  const resolved = new Set(selectedIds);
+  const queue = [...selectedIds];
+  while (queue.length > 0) {
+    const id = queue.shift();
+    if (!id) continue;
+    const opt = optionMap.get(id);
+    opt?.autoSelects?.forEach((dep) => {
+      if (!resolved.has(dep)) {
+        resolved.add(dep);
+        queue.push(dep);
+      }
+    });
+  }
+  return [...resolved];
+};
 
-export const buildPrompt = (spec: ImageSpec) => {
-  const subject: string[] = [];
-  if (spec.subject.source === 'uploaded_image') subject.push('使用上傳照片中的兩位人物，保留兩人的臉部特徵與身材比例');
-  if (spec.subject.adjustableExpression) subject.push('可微調表情，但維持原人物辨識度');
+export const buildPromptFromSelections = (subject: string, selectedIds: string[], extraNotes: string): PromptBuildResult => {
+  const fragments: string[] = [subject.trim() || 'photo subject'];
+  const resolvedIds = resolveIds(selectedIds);
 
-  const composition: string[] = [];
-  if (spec.composition.shot === 'full_body') composition.push('全身照，兩人完整入鏡，不裁切頭、手或腳');
-  if (spec.composition.lens === '15mm') composition.push('使用 15mm 廣角攝影，但避免臉部與身體誇張變形');
-  if (spec.composition.constraints.includes('centered_subject')) composition.push('人物置中');
+  resolvedIds.forEach((id) => {
+    const opt = optionMap.get(id);
+    if (!opt) return;
+    fragments.push(...opt.tokens);
+  });
 
-  const sections: Array<[string, string[]]> = [
-    ['主體', subject],
-    ['動作', spec.actions.map((x) => labelMap.actions[x as keyof typeof labelMap.actions]).filter(Boolean)],
-    ['構圖', composition],
-    ['場景', spec.scene.map((x) => labelMap.scene[x as keyof typeof labelMap.scene]).filter(Boolean)],
-    ['光線', spec.lighting.map((x) => labelMap.lighting[x as keyof typeof labelMap.lighting]).filter(Boolean)],
-    ['風格', spec.style.map((x) => labelMap.style[x as keyof typeof labelMap.style]).filter(Boolean)],
-    ['限制', spec.negativeConstraints.map((x) => labelMap.negative[x as keyof typeof labelMap.negative]).filter(Boolean)],
-  ];
+  if (extraNotes.trim()) fragments.push(extraNotes.trim());
 
-  const body = sections
-    .filter(([, lines]) => lines.length > 0)
-    .map(([title, lines]) => `${title}：\n${bullet(lines)}`)
-    .join('\n\n');
+  const deduped: string[] = [];
+  const seen = new Set<string>();
+  fragments.forEach((part) => {
+    const normalized = part.toLowerCase().replace(/\s+/g, ' ').trim();
+    if (!normalized || seen.has(normalized)) return;
+    seen.add(normalized);
+    deduped.push(part.replace(/\s+/g, ' ').trim());
+  });
 
-  return spec.extraNotes ? `${body}\n\n補充需求：\n- ${spec.extraNotes}` : body;
+  return {
+    normalizedPrompt: deduped.join(', '),
+    appliedOptionIds: resolvedIds,
+    fragments: deduped,
+  };
 };

@@ -1,42 +1,20 @@
-export type PromptCategoryId =
-  | 'subject'
-  | 'actions'
-  | 'composition'
-  | 'scene'
-  | 'lighting'
-  | 'style'
-  | 'negativeConstraints';
-
 export interface PromptOption {
   id: string;
   label: string;
-  value: string;
-  category: PromptCategoryId;
+  tokens: string[];
   autoSelects?: string[];
 }
 
 export interface PromptCategory {
-  id: PromptCategoryId;
+  id: string;
   label: string;
+  description?: string;
+  multi: boolean;
   options: PromptOption[];
 }
 
-export interface ImageSpec {
-  subject: {
-    source?: 'uploaded_image';
-    preserveFace: boolean;
-    preserveBodyRatio: boolean;
-    adjustableExpression: boolean;
-  };
-  actions: string[];
-  composition: {
-    shot?: string;
-    lens?: string;
-    constraints: string[];
-  };
-  scene: string[];
-  lighting: string[];
-  style: string[];
-  negativeConstraints: string[];
-  extraNotes?: string;
+export interface PromptBuildResult {
+  normalizedPrompt: string;
+  appliedOptionIds: string[];
+  fragments: string[];
 }
