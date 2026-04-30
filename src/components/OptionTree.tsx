@@ -8,6 +8,26 @@ interface Props {
   onToggle: (id: string, categoryId: string, multi: boolean) => void;
 }
 
+const categoryVisual: Record<string, string> = {
+  emotion: '😊',
+  style: '🎬',
+  scene: '🌆',
+  color: '🎨',
+  'camera-motion': '🏃',
+  negative: '🚫',
+  lighting: '💡',
+  composition: '🧩',
+  focal: '📷',
+};
+
+const previewClass = (id: string) => {
+  if (id.includes('color.') || id.includes('teal') || id.includes('blue')) return 'bg-gradient-to-r from-cyan-500 to-orange-400';
+  if (id.includes('light.')) return 'bg-gradient-to-r from-yellow-200 to-yellow-500';
+  if (id.includes('emo.')) return 'bg-gradient-to-r from-pink-300 to-rose-500';
+  if (id.includes('focal.')) return 'bg-gradient-to-r from-slate-400 to-slate-700';
+  return 'bg-gradient-to-r from-slate-200 to-slate-400';
+};
+
 export default function OptionTree({ categories, selectedIds, resolvedIds, onToggle }: Props) {
   const selected = useMemo(() => new Set(selectedIds), [selectedIds]);
   const resolved = useMemo(() => new Set(resolvedIds), [resolvedIds]);
@@ -19,7 +39,7 @@ export default function OptionTree({ categories, selectedIds, resolvedIds, onTog
         {categories.map((cat) => (
           <div key={cat.id} className="group relative rounded-lg border border-slate-200 bg-slate-50 p-2">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium">{cat.label}</span>
+              <span className="text-sm font-medium flex items-center gap-1"><span>{categoryVisual[cat.id] ?? '✨'}</span>{cat.label}</span>
               <span className="text-xs text-slate-500">{cat.groups.length} 組</span>
             </div>
 
@@ -33,6 +53,7 @@ export default function OptionTree({ categories, selectedIds, resolvedIds, onTog
                         <div key={s.id} className="rounded border border-slate-100 p-1">
                           <label className="flex items-center gap-2 text-sm">
                             <input type="checkbox" checked={selected.has(s.id) || resolved.has(s.id)} onChange={() => onToggle(s.id, cat.id, cat.multi)} />
+                            <span className={`inline-block w-6 h-4 rounded ${previewClass(s.id)}`} />
                             {s.label}
                           </label>
                           {s.leaves?.length ? (
@@ -40,6 +61,7 @@ export default function OptionTree({ categories, selectedIds, resolvedIds, onTog
                               {s.leaves.map((l) => (
                                 <label key={l.id} className="flex items-center gap-1 text-xs text-slate-700">
                                   <input type="checkbox" checked={selected.has(l.id) || resolved.has(l.id)} onChange={() => onToggle(l.id, cat.id, true)} />
+                                  <span className={`inline-block w-5 h-3 rounded ${previewClass(l.id)}`} />
                                   {l.label}
                                 </label>
                               ))}
