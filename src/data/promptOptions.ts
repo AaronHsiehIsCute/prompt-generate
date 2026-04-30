@@ -7,48 +7,78 @@ export const PROMPT_CATEGORIES: PromptCategory[] = [
         { id: 'emo.joy.smile', label: '微笑', tokens: ['gentle smile'] },
         { id: 'emo.joy.happy', label: '開心', tokens: ['happy expression'] },
         { id: 'emo.joy.laugh', label: '大笑', tokens: ['laughing naturally'] },
-      ]},
+      ] },
       { id: 'emo.pos.confidence', label: '自信', leaves: [
         { id: 'emo.conf.pose', label: '挺胸姿態', tokens: ['confident posture'] },
         { id: 'emo.conf.eye', label: '堅定眼神', tokens: ['steady confident eye contact'] },
-      ]},
-    ]},
+      ] },
+    ] },
     { id: 'emo.negative', label: '消極情緒', subOptions: [
       { id: 'emo.neg.sad', label: '低落', leaves: [
         { id: 'emo.sad.quiet', label: '安靜沉思', tokens: ['quiet contemplative sadness'] },
         { id: 'emo.sad.tear', label: '微含淚光', tokens: ['subtle teary eyes'] },
-      ]},
+      ] },
       { id: 'emo.neg.lonely', label: '孤獨', leaves: [
         { id: 'emo.lonely.space', label: '留白感', tokens: ['lonely mood with negative space'] },
         { id: 'emo.lonely.lookaway', label: '視線離鏡', tokens: ['looking away from camera'] },
-      ]},
-    ]},
-  ]},
+      ] },
+    ] },
+  ] },
   { id: 'style', label: '2) 風格', multi: true, groups: [
     { id: 'style.photo', label: '攝影語言', subOptions: [
       { id: 'style.cinematic', label: '電影感', tokens: ['cinematic composition', 'filmic color grading'] },
       { id: 'style.editorial', label: '時尚編輯', tokens: ['editorial fashion photography'] },
       { id: 'style.docu', label: '紀實', tokens: ['documentary realism'] },
       { id: 'style.fineart', label: '藝術攝影', tokens: ['fine-art photography tone'] },
-    ]},
+    ] },
     { id: 'style.era', label: '年代質感', subOptions: [
       { id: 'era.90s', label: '90s 底片', tokens: ['1990s film grain aesthetic'] },
       { id: 'era.y2k', label: 'Y2K', tokens: ['y2k vibrant style'] },
       { id: 'era.modern', label: '現代乾淨商攝', tokens: ['modern clean commercial look'] },
-    ]},
-  ]},
+    ] },
+  ] },
   { id: 'scene', label: '3) 場景', multi: true, groups: [
     { id: 'scene.city', label: '城市', subOptions: [
       { id: 'city.street', label: '街頭', tokens: ['urban street backdrop'] },
       { id: 'city.cafe', label: '咖啡廳', tokens: ['cozy cafe interior'] },
       { id: 'city.metro', label: '地鐵', tokens: ['subway platform environment'] },
       { id: 'city.rooftop', label: '天台', tokens: ['city rooftop skyline'] },
-    ]},
+    ] },
     { id: 'scene.nature', label: '自然', subOptions: [
       { id: 'nature.forest', label: '森林', tokens: ['lush forest setting'] },
       { id: 'nature.coast', label: '海岸', tokens: ['coastal seascape'] },
       { id: 'nature.mountain', label: '山景', tokens: ['mountain vista background'] },
       { id: 'nature.snow', label: '雪地', tokens: ['snowfield environment'] },
-    ]},
-  ]},
+    ] },
+  ] },
+  { id: 'color', label: '4) 色彩氣氛', multi: true, groups: [
+    { id: 'color.warm', label: '暖色系', subOptions: [
+      { id: 'color.sunset', label: '夕陽橘紅', tokens: ['warm sunset orange palette'] },
+      { id: 'color.gold', label: '金色調', tokens: ['golden amber tones'] },
+    ] },
+    { id: 'color.cool', label: '冷色系', subOptions: [
+      { id: 'color.blue', label: '電影藍調', tokens: ['cool cinematic blue tones'] },
+      { id: 'color.silver', label: '銀灰極簡', tokens: ['silver-gray minimalist palette'] },
+    ] },
+  ] },
+  { id: 'camera-motion', label: '5) 快門/動態感', multi: true, groups: [
+    { id: 'motion.freeze', label: '凝結動作', subOptions: [
+      { id: 'motion.sports', label: '運動凍結感', tokens: ['crisp frozen motion details'] },
+      { id: 'motion.splash', label: '水花凍結', tokens: ['frozen splash droplets'] },
+    ] },
+    { id: 'motion.blur', label: '動態模糊', subOptions: [
+      { id: 'motion.panning', label: '追焦拖影', tokens: ['panning motion blur background'] },
+      { id: 'motion.lighttrail', label: '光軌', tokens: ['long exposure light trails'] },
+    ] },
+  ] },
+  { id: 'negative', label: '6) 負向限制', multi: true, groups: [
+    { id: 'neg.anatomy', label: '人物', subOptions: [
+      { id: 'neg.fingers', label: '避免手指錯誤', tokens: ['no extra fingers'] },
+      { id: 'neg.face', label: '避免臉部崩壞', tokens: ['no facial distortion'] },
+    ] },
+    { id: 'neg.output', label: '輸出', subOptions: [
+      { id: 'neg.lowres', label: '避免低解析', tokens: ['no low-resolution artifacts'] },
+      { id: 'neg.watermark', label: '無文字浮水印', tokens: ['no watermark', 'no text overlay'] },
+    ] },
+  ] },
 ];

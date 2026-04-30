@@ -11,8 +11,9 @@ export default function App() {
   const [subject, setSubject] = useState('a portrait of a traveler');
   const [rawPrompt, setRawPrompt] = useState('');
   const [extraNotes, setExtraNotes] = useState('');
+  const [focalLength, setFocalLength] = useState(50);
 
-  const result = useMemo(() => buildPromptFromSelections(subject, selectedIds, extraNotes), [subject, selectedIds, extraNotes]);
+  const result = useMemo(() => buildPromptFromSelections(subject, selectedIds, extraNotes, focalLength), [subject, selectedIds, extraNotes, focalLength]);
 
   const onToggle = (id: string, categoryId: string, multi: boolean) => {
     setSelectedIds((prev) => {
@@ -32,6 +33,13 @@ export default function App() {
       <div className="mb-4 rounded-lg border bg-white p-4">
         <h2 className="mb-2 font-semibold text-slate-700">主題描述（必填）</h2>
         <input value={subject} onChange={(e) => setSubject(e.target.value)} className="w-full rounded border p-2 text-sm" placeholder="例如：a red fox walking in snow" />
+      </div>
+
+
+      <div className="mb-4 rounded-lg border bg-white p-4">
+        <h2 className="mb-2 font-semibold text-slate-700">焦距拉條（影像透視感）</h2>
+        <input type="range" min={16} max={200} step={1} value={focalLength} onChange={(e) => setFocalLength(Number(e.target.value))} className="w-full" />
+        <p className="mt-1 text-sm text-slate-600">目前：{focalLength}mm（越小越廣角、越大壓縮感越強）</p>
       </div>
 
       <div className="grid gap-4 xl:grid-cols-2">
