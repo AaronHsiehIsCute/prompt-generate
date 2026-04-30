@@ -7,6 +7,8 @@ export const PROMPT_CATEGORIES: PromptCategory[] = [
         { id: 'emo.joy.smile', label: '微笑', tokens: ['gentle smile'] },
         { id: 'emo.joy.happy', label: '開心', tokens: ['happy expression'] },
         { id: 'emo.joy.laugh', label: '大笑', tokens: ['laughing naturally'] },
+        { id: 'emo.joy.excited', label: '興奮雀躍', tokens: ['excited joyful energy'] },
+        { id: 'emo.joy.relaxed', label: '放鬆愉悅', tokens: ['relaxed pleasant mood'] },
       ] },
       { id: 'emo.pos.confidence', label: '自信', leaves: [
         { id: 'emo.conf.pose', label: '挺胸姿態', tokens: ['confident posture'] },
@@ -30,6 +32,8 @@ export const PROMPT_CATEGORIES: PromptCategory[] = [
       { id: 'style.editorial', label: '時尚編輯', tokens: ['editorial fashion photography'] },
       { id: 'style.docu', label: '紀實', tokens: ['documentary realism'] },
       { id: 'style.fineart', label: '藝術攝影', tokens: ['fine-art photography tone'] },
+      { id: 'style.commercial', label: '商業廣告', tokens: ['commercial campaign photography'] },
+      { id: 'style.minimal', label: '極簡現代', tokens: ['minimal modern style'] },
     ] },
     { id: 'style.era', label: '年代質感', subOptions: [
       { id: 'era.90s', label: '90s 底片', tokens: ['1990s film grain aesthetic'] },
@@ -43,12 +47,14 @@ export const PROMPT_CATEGORIES: PromptCategory[] = [
       { id: 'city.cafe', label: '咖啡廳', tokens: ['cozy cafe interior'] },
       { id: 'city.metro', label: '地鐵', tokens: ['subway platform environment'] },
       { id: 'city.rooftop', label: '天台', tokens: ['city rooftop skyline'] },
+      { id: 'city.rain', label: '雨夜街道', tokens: ['rainy city night reflections'] },
     ] },
     { id: 'scene.nature', label: '自然', subOptions: [
       { id: 'nature.forest', label: '森林', tokens: ['lush forest setting'] },
       { id: 'nature.coast', label: '海岸', tokens: ['coastal seascape'] },
       { id: 'nature.mountain', label: '山景', tokens: ['mountain vista background'] },
       { id: 'nature.snow', label: '雪地', tokens: ['snowfield environment'] },
+      { id: 'nature.lake', label: '湖畔', tokens: ['calm lakeside scenery'] },
     ] },
   ] },
   { id: 'color', label: '4) 色彩氣氛', multi: true, groups: [
@@ -92,6 +98,7 @@ export const PROMPT_CATEGORIES: PromptCategory[] = [
       { id: 'light.rembrandt', label: 'Rembrandt', tokens: ['rembrandt lighting'] },
       { id: 'light.clamshell', label: 'Clamshell', tokens: ['beauty clamshell lighting'] },
       { id: 'light.split', label: 'Split light', tokens: ['split lighting dramatic mood'] },
+      { id: 'light.loop', label: 'Loop light', tokens: ['loop lighting portrait style'] },
     ] },
   ] },
   { id: 'composition', label: '8) 構圖', multi: true, groups: [
@@ -104,6 +111,7 @@ export const PROMPT_CATEGORIES: PromptCategory[] = [
       { id: 'comp.bokeh', label: '淺景深', tokens: ['shallow depth of field'] },
       { id: 'comp.layer', label: '前中後景', tokens: ['layered foreground midground background'] },
       { id: 'comp.negative', label: '留白', tokens: ['strong negative space'] },
+      { id: 'comp.symmetry', label: '對稱構圖', tokens: ['symmetrical composition'] },
     ] },
   ] },
 
