@@ -7,21 +7,12 @@ PROMPT_CATEGORIES.forEach((c) => c.groups.forEach((g) => g.subOptions.forEach((s
   s.leaves?.forEach((l) => tokenMap.set(l.id, l.tokens));
 })));
 
-const focalTokens = (focalLength: number): string[] => {
-  if (focalLength <= 24) return [`${focalLength}mm ultra-wide perspective`, 'strong environmental context'];
-  if (focalLength <= 35) return [`${focalLength}mm wide storytelling perspective`];
-  if (focalLength <= 55) return [`${focalLength}mm natural human-eye perspective`];
-  if (focalLength <= 85) return [`${focalLength}mm portrait compression`, 'flattering facial proportions'];
-  return [`${focalLength}mm telephoto compression`, 'strong background separation'];
-};
-
 export const buildPromptFromSelections = (
   subject: string,
   selectedIds: string[],
   extraNotes: string,
-  focalLength: number,
 ): PromptBuildResult => {
-  const fragments: string[] = [subject.trim() || 'photo subject', ...focalTokens(focalLength)];
+  const fragments: string[] = [subject.trim() || 'photo subject'];
   selectedIds.forEach((id) => tokenMap.get(id)?.forEach((t) => fragments.push(t)));
   if (extraNotes.trim()) fragments.push(extraNotes.trim());
 

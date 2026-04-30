@@ -125,4 +125,23 @@ export const PROMPT_CATEGORIES: PromptCategory[] = [
     ] },
   ] },
 
+
+  { id: 'focal', label: '9) 焦距選項', multi: true, groups: [
+    { id: 'focal.wide', label: '廣角', subOptions: [
+      { id: 'focal.16', label: '16mm 超廣角', tokens: ['16mm ultra-wide perspective', 'strong environmental context'] },
+      { id: 'focal.24', label: '24mm 環境敘事', tokens: ['24mm wide storytelling perspective'] },
+      { id: 'focal.35', label: '35mm 平衡街拍', tokens: ['35mm balanced documentary look'] },
+    ] },
+    { id: 'focal.standard', label: '標準焦段', subOptions: [
+      { id: 'focal.50', label: '50mm 自然視角', tokens: ['50mm natural human-eye perspective'] },
+      { id: 'focal.58', label: '58mm 人像自然感', tokens: ['58mm natural portrait perspective'] },
+    ] },
+    { id: 'focal.tele', label: '中長焦', subOptions: [
+      { id: 'focal.85', label: '85mm 人像壓縮', tokens: ['85mm portrait compression', 'flattering facial proportions'] },
+      { id: 'focal.105', label: '105mm 精緻人像', tokens: ['105mm telephoto portrait separation'] },
+      { id: 'focal.135', label: '135mm 強背景分離', tokens: ['135mm telephoto compression', 'strong background separation'] },
+      { id: 'focal.200', label: '200mm 遠攝壓縮', tokens: ['200mm distant telephoto compression'] },
+    ] },
+  ] },
+
 ];
