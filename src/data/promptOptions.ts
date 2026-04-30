@@ -13,6 +13,8 @@ export const PROMPT_CATEGORIES: PromptCategory[] = [
       { id: 'emo.pos.confidence', label: '自信', leaves: [
         { id: 'emo.conf.pose', label: '挺胸姿態', tokens: ['confident posture'] },
         { id: 'emo.conf.eye', label: '堅定眼神', tokens: ['steady confident eye contact'] },
+        { id: 'emo.conf.smirk', label: '淡淡自信笑', tokens: ['confident subtle smirk'] },
+        { id: 'emo.conf.power', label: '掌控感', tokens: ['powerful commanding presence'] },
       ] },
     ] },
     { id: 'emo.negative', label: '消極情緒', subOptions: [
@@ -34,6 +36,8 @@ export const PROMPT_CATEGORIES: PromptCategory[] = [
       { id: 'style.fineart', label: '藝術攝影', tokens: ['fine-art photography tone'] },
       { id: 'style.commercial', label: '商業廣告', tokens: ['commercial campaign photography'] },
       { id: 'style.minimal', label: '極簡現代', tokens: ['minimal modern style'] },
+      { id: 'style.street', label: '街頭潮流', tokens: ['streetwear fashion vibe'] },
+      { id: 'style.vintage', label: '復古懷舊', tokens: ['vintage nostalgic color tone'] },
     ] },
     { id: 'style.era', label: '年代質感', subOptions: [
       { id: 'era.90s', label: '90s 底片', tokens: ['1990s film grain aesthetic'] },
@@ -61,20 +65,24 @@ export const PROMPT_CATEGORIES: PromptCategory[] = [
     { id: 'color.warm', label: '暖色系', subOptions: [
       { id: 'color.sunset', label: '夕陽橘紅', tokens: ['warm sunset orange palette'] },
       { id: 'color.gold', label: '金色調', tokens: ['golden amber tones'] },
+      { id: 'color.peach', label: '蜜桃柔光', tokens: ['peach soft pastel palette'] },
     ] },
     { id: 'color.cool', label: '冷色系', subOptions: [
       { id: 'color.blue', label: '電影藍調', tokens: ['cool cinematic blue tones'] },
       { id: 'color.silver', label: '銀灰極簡', tokens: ['silver-gray minimalist palette'] },
+      { id: 'color.teal', label: '青綠電影色', tokens: ['teal and orange cinematic contrast'] },
     ] },
   ] },
   { id: 'camera-motion', label: '5) 快門/動態感', multi: true, groups: [
     { id: 'motion.freeze', label: '凝結動作', subOptions: [
       { id: 'motion.sports', label: '運動凍結感', tokens: ['crisp frozen motion details'] },
       { id: 'motion.splash', label: '水花凍結', tokens: ['frozen splash droplets'] },
+      { id: 'motion.jump', label: '跳躍瞬間', tokens: ['freeze jumping moment sharply'] },
     ] },
     { id: 'motion.blur', label: '動態模糊', subOptions: [
       { id: 'motion.panning', label: '追焦拖影', tokens: ['panning motion blur background'] },
       { id: 'motion.lighttrail', label: '光軌', tokens: ['long exposure light trails'] },
+      { id: 'motion.crowd', label: '人群流動感', tokens: ['moving crowd motion blur'] },
     ] },
   ] },
   { id: 'negative', label: '6) 負向限制', multi: true, groups: [
@@ -85,6 +93,7 @@ export const PROMPT_CATEGORIES: PromptCategory[] = [
     { id: 'neg.output', label: '輸出', subOptions: [
       { id: 'neg.lowres', label: '避免低解析', tokens: ['no low-resolution artifacts'] },
       { id: 'neg.watermark', label: '無文字浮水印', tokens: ['no watermark', 'no text overlay'] },
+      { id: 'neg.ns', label: '避免不雅內容', tokens: ['safe for work content only'] },
     ] },
   ] },
   
@@ -112,6 +121,7 @@ export const PROMPT_CATEGORIES: PromptCategory[] = [
       { id: 'comp.layer', label: '前中後景', tokens: ['layered foreground midground background'] },
       { id: 'comp.negative', label: '留白', tokens: ['strong negative space'] },
       { id: 'comp.symmetry', label: '對稱構圖', tokens: ['symmetrical composition'] },
+      { id: 'comp.frame', label: '框中框', tokens: ['frame-within-a-frame composition'] },
     ] },
   ] },
 
