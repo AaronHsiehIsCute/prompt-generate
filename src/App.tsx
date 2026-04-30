@@ -12,8 +12,9 @@ export default function App() {
   const [rawPrompt, setRawPrompt] = useState('');
   const [extraNotes, setExtraNotes] = useState('');
   const [focalLength, setFocalLength] = useState(50);
+  const [model, setModel] = useState<'generic' | 'midjourney' | 'sdxl'>('generic');
 
-  const result = useMemo(() => buildPromptFromSelections(subject, selectedIds, extraNotes, focalLength), [subject, selectedIds, extraNotes, focalLength]);
+  const result = useMemo(() => buildPromptFromSelections(subject, selectedIds, extraNotes, focalLength, model), [subject, selectedIds, extraNotes, focalLength, model]);
 
   const onToggle = (id: string, categoryId: string, multi: boolean) => {
     setSelectedIds((prev) => {
@@ -42,6 +43,16 @@ export default function App() {
         <p className="mt-1 text-sm text-slate-600">目前：{focalLength}mm（越小越廣角、越大壓縮感越強）</p>
       </div>
 
+
+      <div className="mb-4 rounded-lg border bg-white p-4">
+        <h2 className="mb-2 font-semibold text-slate-700">模型格式</h2>
+        <select value={model} onChange={(e) => setModel(e.target.value as 'generic' | 'midjourney' | 'sdxl')} className="w-full rounded border p-2 text-sm">
+          <option value="generic">Generic</option>
+          <option value="midjourney">Midjourney</option>
+          <option value="sdxl">SDXL</option>
+        </select>
+      </div>
+
       <div className="grid gap-4 xl:grid-cols-2 items-start">
         <section>
           <OptionTree categories={PROMPT_CATEGORIES} selectedIds={selectedIds} resolvedIds={result.appliedOptionIds} onToggle={onToggle} />
@@ -50,7 +61,7 @@ export default function App() {
             <textarea value={extraNotes} onChange={(e) => setExtraNotes(e.target.value)} rows={4} className="w-full rounded border p-2 text-sm" />
           </div>
         </section>
-        <PromptPreview rawPrompt={rawPrompt} finalPrompt={result.normalizedPrompt} onRawPromptChange={setRawPrompt} />
+        <div className="space-y-3"><div className="rounded-lg border bg-white p-3 text-sm"><p>Prompt Health Score: <b>{result.score}</b>/100</p>{result.warnings.length ? <ul className="list-disc pl-5 text-amber-700">{result.warnings.map((w) => <li key={w}>{w}</li>)}</ul> : <p className="text-emerald-700">無衝突警告</p>}</div><PromptPreview rawPrompt={rawPrompt} finalPrompt={result.normalizedPrompt} onRawPromptChange={setRawPrompt} /></div>
       </div>
     </main>
   );
