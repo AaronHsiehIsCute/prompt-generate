@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import type { PromptCategory } from '../types/prompt';
 
 interface Props {
@@ -11,28 +11,50 @@ interface Props {
 export default function OptionTree({ categories, selectedIds, resolvedIds, onToggle }: Props) {
   const selected = useMemo(() => new Set(selectedIds), [selectedIds]);
   const resolved = useMemo(() => new Set(resolvedIds), [resolvedIds]);
-  const [openGroups, setOpenGroups] = useState<string[]>([]);
-  const [openSubOptions, setOpenSubOptions] = useState<string[]>([]);
 
-  const t1 = (id: string) => setOpenGroups((p) => p.includes(id) ? p.filter((x) => x !== id) : [...p, id]);
-  const t2 = (id: string) => setOpenSubOptions((p) => p.includes(id) ? p.filter((x) => x !== id) : [...p, id]);
-
-  return <div className="space-y-3">{categories.map((cat) => <section key={cat.id} className="rounded-lg border bg-white p-3">
-    <h2 className="font-semibold mb-2">{cat.label}</h2>
-    <div className="grid gap-2 md:grid-cols-2">
-      {cat.groups.map((g) => <div key={g.id} className="border rounded">
-        <button type="button" className="w-full px-2 py-1 text-left bg-slate-50 flex justify-between" onClick={() => t1(g.id)}><span>{g.label}</span><span>{openGroups.includes(g.id)?'▾':'▸'}</span></button>
-        {openGroups.includes(g.id) && <div className="p-2 space-y-1">{g.subOptions.map((s) => {
-          const hasLeaves = !!s.leaves?.length;
-          return <div key={s.id} className="rounded border border-slate-100 p-1">
+  return (
+    <div className="rounded-xl border bg-white p-3 shadow-sm">
+      <h2 className="mb-2 text-sm font-semibold text-slate-700">滑鼠移入分類後展開子選項</h2>
+      <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
+        {categories.map((cat) => (
+          <div key={cat.id} className="group relative rounded-lg border border-slate-200 bg-slate-50 p-2">
             <div className="flex items-center justify-between">
-              <label className="text-sm flex items-center gap-2"><input type="checkbox" checked={selected.has(s.id)||resolved.has(s.id)} onChange={() => onToggle(s.id, cat.id, cat.multi)} />{s.label}</label>
-              {hasLeaves && <button type="button" className="text-xs text-blue-600" onClick={() => t2(s.id)}>{openSubOptions.includes(s.id)?'收合':'展開子項'}</button>}
+              <span className="text-sm font-medium">{cat.label}</span>
+              <span className="text-xs text-slate-500">{cat.groups.length} 組</span>
             </div>
-            {hasLeaves && openSubOptions.includes(s.id) && <div className="mt-1 grid grid-cols-2 gap-1">{s.leaves?.map((l) => <label key={l.id} className="text-xs flex items-center gap-1"><input type="checkbox" checked={selected.has(l.id)||resolved.has(l.id)} onChange={() => onToggle(l.id, cat.id, true)} />{l.label}</label>)}</div>}
-          </div>;
-        })}</div>}
-      </div>)}
+
+            <div className="pointer-events-none invisible absolute left-0 top-full z-20 mt-1 w-[28rem] max-w-[95vw] rounded-xl border bg-white p-3 shadow-xl group-hover:pointer-events-auto group-hover:visible">
+              <div className="grid gap-3 md:grid-cols-2">
+                {cat.groups.map((g) => (
+                  <div key={g.id} className="rounded-lg border border-slate-100 p-2">
+                    <p className="mb-1 text-xs font-semibold text-slate-600">{g.label}</p>
+                    <div className="space-y-1">
+                      {g.subOptions.map((s) => (
+                        <div key={s.id} className="rounded border border-slate-100 p-1">
+                          <label className="flex items-center gap-2 text-sm">
+                            <input type="checkbox" checked={selected.has(s.id) || resolved.has(s.id)} onChange={() => onToggle(s.id, cat.id, cat.multi)} />
+                            {s.label}
+                          </label>
+                          {s.leaves?.length ? (
+                            <div className="mt-1 grid grid-cols-2 gap-1 pl-5">
+                              {s.leaves.map((l) => (
+                                <label key={l.id} className="flex items-center gap-1 text-xs text-slate-700">
+                                  <input type="checkbox" checked={selected.has(l.id) || resolved.has(l.id)} onChange={() => onToggle(l.id, cat.id, true)} />
+                                  {l.label}
+                                </label>
+                              ))}
+                            </div>
+                          ) : null}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
-  </section>)}</div>;
+  );
 }

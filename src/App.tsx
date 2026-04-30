@@ -26,9 +26,9 @@ export default function App() {
   };
 
   return (
-    <main className="min-h-screen p-6 bg-slate-50">
+    <main className="min-h-screen p-6 bg-gradient-to-b from-slate-100 to-white">
       <h1 className="text-2xl font-bold mb-1">選項式照片 Prompt 產生器</h1>
-      <p className="mb-4 text-sm text-slate-600">已移除 imageSpec JSON，直接輸出 AI 易讀、去重後的單行 prompt。</p>
+      <p className="mb-4 text-sm text-slate-600">快速組出可直接貼到 AI 的攝影 prompt。</p>
 
       <div className="mb-4 rounded-lg border bg-white p-4">
         <h2 className="mb-2 font-semibold text-slate-700">主題描述（必填）</h2>
@@ -42,7 +42,7 @@ export default function App() {
         <p className="mt-1 text-sm text-slate-600">目前：{focalLength}mm（越小越廣角、越大壓縮感越強）</p>
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-2">
+      <div className="grid gap-4 xl:grid-cols-2 items-start">
         <section>
           <OptionTree categories={PROMPT_CATEGORIES} selectedIds={selectedIds} resolvedIds={result.appliedOptionIds} onToggle={onToggle} />
           <div className="mt-4 rounded-lg border bg-white p-4">

@@ -81,4 +81,30 @@ export const PROMPT_CATEGORIES: PromptCategory[] = [
       { id: 'neg.watermark', label: '無文字浮水印', tokens: ['no watermark', 'no text overlay'] },
     ] },
   ] },
+  
+  { id: 'lighting', label: '7) 光線', multi: true, groups: [
+    { id: 'light.natural', label: '自然光', subOptions: [
+      { id: 'light.golden', label: '黃金時刻', tokens: ['golden hour sunlight'] },
+      { id: 'light.overcast', label: '陰天柔光', tokens: ['soft overcast light'] },
+      { id: 'light.backlit', label: '逆光', tokens: ['backlit rim glow'] },
+    ] },
+    { id: 'light.studio', label: '棚燈', subOptions: [
+      { id: 'light.rembrandt', label: 'Rembrandt', tokens: ['rembrandt lighting'] },
+      { id: 'light.clamshell', label: 'Clamshell', tokens: ['beauty clamshell lighting'] },
+      { id: 'light.split', label: 'Split light', tokens: ['split lighting dramatic mood'] },
+    ] },
+  ] },
+  { id: 'composition', label: '8) 構圖', multi: true, groups: [
+    { id: 'comp.classic', label: '經典構圖', subOptions: [
+      { id: 'comp.third', label: '三分法', tokens: ['rule of thirds composition'] },
+      { id: 'comp.center', label: '置中', tokens: ['centered composition'] },
+      { id: 'comp.leading', label: '引導線', tokens: ['leading lines'] },
+    ] },
+    { id: 'comp.depth', label: '空間層次', subOptions: [
+      { id: 'comp.bokeh', label: '淺景深', tokens: ['shallow depth of field'] },
+      { id: 'comp.layer', label: '前中後景', tokens: ['layered foreground midground background'] },
+      { id: 'comp.negative', label: '留白', tokens: ['strong negative space'] },
+    ] },
+  ] },
+
 ];
